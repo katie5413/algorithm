@@ -1,0 +1,39 @@
+//  main.c
+//  algo-Mario-MaxCircleSum
+//
+//  Created by Katie on 2020/4/1.
+//  Copyright © 2020 Katie. All rights reserved.
+//
+
+#include <stdio.h>
+
+int ans( int *num, int n)
+{
+    int max_sum=0, c=0, min_sum=0, s=0, sum=0;
+    for( int i=0; i<n; i++) {
+        //Max seq sum
+        c = (c>0?c:0) + num[i];
+        max_sum = c>max_sum ?c :max_sum;
+        
+        //min seq sum
+        s = (s<0?s:0) + num[i];
+        min_sum = s<min_sum ?s :min_sum;
+        
+        //total
+        sum+=num[i];
+    }
+    if( max_sum<0 ) return 0;                 //如果最大為負，可以選擇不跳，則能量為0
+    if( max_sum>sum-min_sum) return max_sum;  //在線性的時候，就找到最大的
+    return sum-min_sum;                       //總和減掉最小連續和=環形連續最大和
+}
+
+int main()
+{
+    int n, input=0;
+    int num[100000] = {0};                    //1<N<100000
+    while(scanf("%d",&input)==1){             //測資最後一筆沒有換行，所以不能用EOF
+        num[n]=input;
+        n++;
+    }
+    printf( "%d\n", ans( num, n));
+}
